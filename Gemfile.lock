@@ -570,7 +570,7 @@ DEPENDENCIES
   active_skin
   activeadmin
   bootsnap (>= 1.1.0)
-  bootstrap (~> 4.1.1)
+  bootstrap
   byebug
   capistrano
   capistrano-bundler
