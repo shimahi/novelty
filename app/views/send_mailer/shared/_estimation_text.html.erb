@@ -1,0 +1,13 @@
+<%= @order.customer_name %>様
+
+お世話になっております。
+データチェック結果のお知らせです。
+
+
+
+
+<% if @order.card? %>
+  下記URLより、決済のお手続きお願いいたします。
+
+  <%= link_to "#{root_url}payment_confirm/#{@order.payment_token}", "#{root_url}payment_confirm/#{@order.payment_token}", target: "_blank"%>
+<% end %>

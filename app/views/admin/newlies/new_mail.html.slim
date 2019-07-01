@@ -1,0 +1,12 @@
+= simple_form_for(@mail, url: create_mail_admin_newly_url(@order)) do |f|
+  = f.input :subject, input_html: { value: "お見積もりのお知らせ[ご注文番号: #{@order.id}]"}
+  br
+  = f.input :attachment1, input_html: { accept: ".jpg, .pdf"}
+  br
+  = f.input :attachment2, input_html: { accept: ".jpg, .pdf"}
+  br
+  = f.input :attachment3, input_html: { accept: ".jpg, .pdf"}
+  br
+  = f.input :text, input_html: { rows: 20, value: render('send_mailer/shared/estimation_text') }
+  br
+  = f.submit "メールを送信する", class: "btn btn-primary"

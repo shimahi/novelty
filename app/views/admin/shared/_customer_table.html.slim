@@ -1,0 +1,31 @@
+.panel
+  h3.text-danger 発注者情報
+  .panel_contents
+    .attributes_table.order
+      table border="0" cellspacing="0" cellpaddding="0"
+        tbody
+          tr.row.bold
+            th = t 'activerecord.attributes.order.customer_is_company'
+            td = @order.customer_type
+          tr.row.bold
+            th = t 'activerecord.attributes.order.customer_name'
+            td = @order.customer_name
+          - if @order.customer_is_company
+            tr.row.bold
+              th = t 'activerecord.attributes.order.customer_division_name'
+              td = @order.customer_division_name
+            tr.row.bold
+              th = t 'activerecord.attributes.order.customer_staff_name'
+              td = @order.customer_staff_name
+          tr.row.bold
+            th メールアドレス
+            td = @order.customer_email
+          tr.row.bold
+            th 郵便番号
+            td = @order.customer_zip
+          tr.row.bold
+            th 住所
+            td = @order.customer_addr
+          tr.row.bold
+            th 電話番号
+            td = @order.customer_tel

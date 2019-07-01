@@ -1,0 +1,84 @@
+ja:
+  activerecord:
+    models:
+      order: 注文
+      newly: 注文
+      answering: 注文
+      constructing: 注文
+      done: 注文
+      canceled: キャンセル注文
+    attributes:
+      order:
+        id: 注文番号
+        customer_is_company: 発注先種別
+        customer_name: 顧客名/法人名
+        customer_staff_name: 担当者
+        customer_division_name: 部署
+        customer_email: 発注者メールアドレス
+        customer_zip: 郵便番号
+        customer_addr: 発注者住所
+        customer_addr1: 住所（都道府県）
+        customer_addr2: 住所（市区町村）
+        customer_addr3:  住所（町域）
+        customer_addr4: 住所（番地〜）
+        customer_addr5: 住所（建物〜
+        customer_tel: 発注者電話番号
+        another_shipping: 別送先の有無
+        shipping_is_company: 配送先種別
+        shipping_name: 配送先顧客名/法人名
+        shipping_staff_name: 配送先担当者
+        shipping_division_name: 配送先部署
+        shipping_zip: 配送先郵便番号
+        shipping_addr: 配送先住所
+        shipping_addr1: 住所（都道府県）
+        shipping_addr2: 住所（市区町村）
+        shipping_addr3: 住所（町域）
+        shipping_addr4: 住所（番地〜）
+        shipping_addr5: 住所（建物〜
+        shipping_tel: 配送先電話番号
+        payment_type: 決済方法
+        manufacture_plan: 製作プラン
+        status: 進捗状況
+        to_manufacture: 製作開始日
+        to_ship_date: 発送予定日
+        option: オプション内容
+        created_at: 注文日時
+
+  order:
+    payment_type:
+      card: クレジットカード
+      bank_transfer: 銀行振込
+      cod: 代引き
+    manufacture_plan:
+      normal: 通常製作
+      express: 特急製作
+    status:
+      newly: 新規注文
+      answering: 確約待ち
+      constructing: 製作中
+      done: 発送済み
+      canceled: キャンセル済み
+    item:
+      keyholder: キーホルダー
+      coaster: コースター
+      budge: バッジ
+    wrapping:
+      nowrap: なし
+      unit_1: OPP個別包装
+      unit_2: OPP2個セット包装
+    data_status:
+      unchecked: 未チェック
+      checked: OK
+      error: データエラー
+      caution: 注意事項あり
+      unconfirmed: データ不明
+      canceled: キャンセル
+    size:
+      small: "40mm x 40mm"
+      medium: "70mm × 70mm"
+      large: "100mm × 100mm"
+      extra: "150mm × 150mm"
+      small_ab: "40mm x 40mm両面"
+      medium_ab: "70mm × 70mm両面"
+      large_ab: "100mm × 100mm両面"
+      extra_ab: "150mm × 150mm両面"

@@ -1,0 +1,68 @@
+- url = controller.controller_name == 'orders' ? create_from_admin_order_url(@order) : update_from_admin_order_url(@order)
+= simple_form_for(@order, url: url, method: :post) do |f|
+  .panel
+    h3 発注者情報
+    .panel_contents
+      .form-group
+        = f.hidden_field :id
+        = f.input :customer_is_company, as: :select, include_blank: false, collection: [ ['個人', false],['法人', true]]
+        = f.input :customer_name
+        = f.input :customer_staff_name
+        = f.input :customer_division_name
+        = f.input :customer_email
+        = f.input :customer_tel
+        = f.input :customer_zip
+        = f.input :customer_addr1
+        = f.input :customer_addr2
+        = f.input :customer_addr3
+        = f.input :customer_addr4
+        = f.input :customer_addr5
+    h3 配送先情報
+    .panel_contents
+      .form-group
+        .shipping-form-wrapper
+          = f.input :another_shipping, label: "別送先"
+          .admin-shipping-form-wrapper
+            = f.input :shipping_is_company, as: :select, include_blank: false, collection: [ ['個人', false],['法人', true]]
+            = f.input :shipping_name
+            = f.input :shipping_staff_name
+            = f.input :shipping_division_name
+            = f.input :shipping_tel
+            = f.input :shipping_zip
+            = f.input :shipping_addr1
+            = f.input :shipping_addr2
+            = f.input :shipping_addr3
+            = f.input :shipping_addr4
+            = f.input :shipping_addr5
+    h3 デザインデータ
+    .panel_contents
+      table.table
+        thead
+          tr
+            th = t 'activerecord.attributes.product.design'
+            th = t 'activerecord.attributes.product.item'
+            th = t 'activerecord.attributes.product.size'
+            th = t 'activerecord.attributes.product.quantity'
+            th = t 'activerecord.attributes.product.wrapping'
+        tbody
+          = f.nested_fields_for :products, wrapper_tag: :tr do |p|
+            td
+              = p.input :design, input_html: { accept: ".jpg, .jpeg, .png, .gif, .ai, .psd, .bmp"}, label: false
+              - if p.object.design
+                span.filename = p.object.file_name
+            td = p.input :item, collection: Product.localed_items, include_blank: false, label: false
+            td = p.input :size, collection: Product.localed_sizes, label: false
+            td = p.input :quantity, label: false
+            td = p.input :wrapping, collection: Product.localed_wrappings, include_blank: false, label: false
+            td = p.remove_nested_fields_link '消す', class: "btn delete-button", role: 'button'
+      = f.add_nested_fields_link :products, '追加する', class: 'btn add-button', role: 'button'
+
+    h3 注文情報
+    .panel_contents
+      = f.input :option, as: :text, input_html: {rows: 7}
+      = f.input :manufacture_plan, as: :select,
+        collection: Order.localed_manufacture_plan, include_blank: false
+      = f.input :payment_type, as: :select,
+        collection: Order.localed_payment_type, include_blank: false
+    .submit
+      = f.submit "確定",class: "btn btn-primary"

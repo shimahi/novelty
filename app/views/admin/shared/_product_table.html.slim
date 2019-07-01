@@ -1,0 +1,65 @@
+- if @order.status == 'newly'
+  - url = admin_newly_url(@order)
+- elsif @order.status == 'answering'
+  - url = admin_answering_url(@order)
+- fresh = @order.status == 'newly' || @order.status == 'answering'
+.panel
+  h3 商品デザイン
+  .panel_contents
+    .attributes_table.order
+      /Viewがすげえ煩雑だけどルーティング難しいのでごめん
+      - if fresh
+        = simple_form_for(@order, url: url) do |f|
+          table border="0" cellspacing="0" cellpadding="0"
+            thead
+              tr
+                td 商品名
+                td デザインデータ
+                td サイズ
+                td 数量
+                td 包装オプション
+                td
+                  - if fresh
+                    = f.submit "チェック更新"
+                  - else
+                    | データチェック
+            tbody
+              - if fresh
+                = f.nested_fields_for :products, f.object.products.order(:id), wrapper_tag: :tr do |p|
+                  tr class="#{'canceled-product-row' if p.object.data_status == 'canceled'}"
+                    td = t "order.item.#{p.object.item}"
+                    td.design-cell
+                      - if  p.object.image_file?
+                        = image_tag p.object.design_url
+                      span = p.object.file_name
+                      .download_button
+                        = link_to 'ダウンロード', data_download_order_path(design: p.object.design), method: :post
+                    td = t "order.size.#{p.object.size}"
+                    td = p.object.quantity
+                    td = t "order.wrapping.#{p.object.wrapping}"
+                    td = p.input :data_status, label: false, collection: Product.localed_data_statuses,
+                       include_blank: false, label: false
+      - else
+        table border="0" cellspacing="0" cellpadding="0"
+          thead
+            tr
+              td 商品名
+              td デザインデータ
+              td サイズ
+              td 数量
+              td 包装オプション
+              td データチェック
+          tbody
+            - @order.products.order(:id).each do |product|
+               tr class="#{'canceled-product-row' if product.data_status == 'canceled'}"
+                 td = t "order.item.#{product.item}"
+                 td.design-cell
+                   - if  product.image_file?
+                     = image_tag product.design_url
+                   span = product.file_name
+                   .download_button
+                     = link_to 'ダウンロード', data_download_order_path(design: product.design), method: :post
+                 td = t "order.size.#{product.size}"
+                 td = product.quantity
+                 td = t "order.wrapping.#{product.wrapping}"
+                 td = t "order.data_status.#{product.data_status}"

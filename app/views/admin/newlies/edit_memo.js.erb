@@ -1,0 +1,9 @@
+$("#<%= @order.id %>").html('\
+<%= form_tag("/admin/#{@order.status.pluralize}/#{@order.id}/update_memo") do %>\
+  <div class="form-wrp form-for-index">\
+<textarea name="memo" rows="5">\
+<%= @order.memo.gsub(/\r\n|\r|\n/, "") %>\
+</textarea>\
+      <input type="submit" value="保存">\
+  </div>\
+<% end %>');

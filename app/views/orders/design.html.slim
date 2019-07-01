@@ -1,0 +1,44 @@
+.container.mt-5
+  h2 入稿データをアップロードしてください
+
+  .border.p-3
+    p = @order.customer_name
+    p = @order.customer_email
+  .border.border-info.p-3
+    -@order.products.each do |product|
+      p = product.item
+      p = product.design
+      p --------
+  /戻る用フォーム
+  = simple_form_for(@order, url: re_address_order_url(@order), html: { id: :return_form }) do |f|
+    =render 'orders/hidden/design', f: f
+    = f.submit "戻る", class: 'btn btn-default'
+
+  .row.mt-5
+    = simple_form_for(@order, url: is_design_order_url(@order)) do |f|
+      = render 'orders/hidden/design', f: f
+      table.table
+        thead
+          tr
+            th = t 'activerecord.attributes.product.design'
+            th = t 'activerecord.attributes.product.item'
+            th = t 'activerecord.attributes.product.size'
+            th = t 'activerecord.attributes.product.quantity'
+            th = t 'activerecord.attributes.product.wrapping'
+        tbody
+          = f.nested_fields_for :products, wrapper_tag: :tr do |p|
+            td
+              = p.input :design, input_html: { accept: ".jpg, .jpeg, .png, .gif, .ai, .psd, .bmp"}
+              = p.input :design_cache, as: :hidden
+            td.item-data = p.input :item, collection: Product.localed_items, include_blank: false
+            - if p.object.item == "coaster"
+              td = p.input :size, collection: Product.localed_sizes,
+                disabled: true
+            - else
+              td = p.input :size, collection: Product.localed_sizes, include_blank: false
+            td = p.input :quantity
+            td = p.input :wrapping, collection: Product.localed_wrappings, include_blank: false, selected: 'nowrap'
+            td = p.remove_nested_fields_link '消す', class: "btn btn-danger", role: 'button'
+      = f.add_nested_fields_link :products, '追加する', class: 'btn btn-info', role: 'button'
+      div
+        = f.submit "確定して次へ", class: 'btn btn-primary'

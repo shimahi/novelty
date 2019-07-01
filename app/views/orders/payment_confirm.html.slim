@@ -1,0 +1,34 @@
+div クレジットカードでのお支払い
+div
+  | 弊社ではクレジットカード決済代行サービスの
+  = link_to ' Stripe ', 'https://stripe.com/jp', target: '_blank'
+  | を利用しています。
+  br
+  | 当サイト・当事業において、お客様のカード情報は決済手続きのみに使用し、
+  | その他の目的においてカード情報を閲覧・利用・保持することはありません。
+.border.border-info
+  | ご注文情報
+  br
+  = @order.id
+  br
+  = @order.total_price
+
+
+- if @order.paid_confirmation
+  p このご注文はすでに決済手続きを完了しています。
+- else
+  .bg-light
+    /TODO:それっぽいロゴがあればdata-imageを追加する
+    .stripe-form = form_tag("/pay/#{@order.payment_token}", method: :post) do
+      script.stripe-button[
+        src="#{Novelty::Application.config.stripe[:end_point]}" class="stripe-button"
+        data-key="#{Novelty::Application.config.stripe[:public_key]}"
+        data-name="#{Novelty::Application.config.site_name} 決済フォーム"
+        data-locale="ja"
+        data-currency="jpy"
+        data-label="クレジットカードで支払う"
+        data-amount="#{@order.total_price}"
+        data-email="#{@order.customer_email}"
+        data-allow-remember-me="false"
+        ]
+

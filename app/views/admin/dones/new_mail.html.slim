@@ -1,0 +1,4 @@
+= simple_form_for(@mail, url: create_mail_admin_done_url(@order)) do |f|
+  = f.input :subject, input_html: { value: "お知らせ[ご注文番号: #{@order.id}]"}
+  = f.input :text, input_html: { rows: 20 }
+  = f.submit "メールを送信する", class: "btn btn-primary"

@@ -1,0 +1,169 @@
+<p>
+  <%= @order.customer_name %>様
+  <br>
+  <br>
+  <br>
+  お世話になっております。
+  <br>
+  <br>
+  この度はご入稿誠に有難う御座います。
+  <br>
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  ※ご注文はまだ確定しておりません。
+  <br>
+  1営業日以内に、データチェック結果・合計金額のご案内をお送り致します。暫くお待ちください。
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  <br>
+  <br>
+  ・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・ 
+  <br>
+  下記の内容でお申し込み頂きました。
+  <br>
+  ・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・-・
+  <br>
+  <br>
+  ■受付
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  ご注文番号：<%= @order.id %>
+  <br>
+  受付日時：<%= @order.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+  <br>
+  <br>
+  ■今後の流れ
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  ※お問い合わせの際は、ご注文番号[<%= @order.id %>]をお伝えください。
+  <br>
+  <br>
+  【ご入稿】(こちらの手順が完了しました。)
+  <br>
+  データチェック結果とお見積もりのご案内まで今しばらくお待ち下さい。
+  <br>
+  ↓
+  <br>
+  ↓
+  <br>
+  【弊社より、データチェック結果とお見積もりのお知らせメール】
+  <br>データチェック結果と、お見積もり・納期についてのご案内を当方よりお知らせ致します。
+  <br>
+  ↓
+  <br>
+  ↓
+  <br>
+  【お客様による正式オーダー】
+  <br>
+  ご注文のお見積もり・納期についてご確認頂き、お支払い方法に応じた手順でご注文確定手続きを行なって頂きます。
+  <br>
+  ↓
+  <br>
+  ↓
+  <br>
+  【ご注文確定・弊社より、製作開始のお知らせメール】(納期の起算日です。)
+  <br>
+  注文が確定した段階で次第、製作を開始します。
+  <br>
+  これ移行、ご注文のキャンセル・変更はできません。
+  <br>
+  ↓
+  <br>
+  ↓
+  <br>
+  【商品の発送】
+  <br>
+  <br>
+  ■お客様情報
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  お名前：<%= @order.customer_name %>　様
+  <% if @order.customer_division_name %>
+    <br>
+    部署：<%= @order.customer_division_name %>
+  <% end %>
+  <% if @order.customer_staff_name %>
+    <br>
+    ご担当者様：<%= @order.customer_staff_name %>　様
+  <% end %>
+  <br>
+  ご住所：〒<%= @order.customer_zip %>&nbsp;&nbsp;&nbsp;<%= @order.customer_addr %>
+  <br>
+  お電話番号：<%= @order.customer_tel %>
+  <br>
+  <br>
+  ■納品先
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  <% if @order.another_shipping %>
+    お名前：<%= @order.shipping_name %>　様
+    <% if @order.shipping_division_name %>
+      <br>
+      部署：<%= @order.shipping_division_name %>
+    <% end %>
+    <% if @order.shipping_staff_name %>
+      <br>
+      ご担当者様：<%= @order.shipping_staff_name %>　様
+    <% end %>
+    <br>
+    ご住所：〒<%= @order.shipping_zip %>&nbsp;&nbsp;&nbsp;<%= @order.shipping_addr %>
+    <br>
+    お電話番号：<%= @order.shipping_tel %>
+  <% else %>
+    ○お客様のご住所に配送致します。
+  <% end %>
+  <br>
+  <br>
+  ■ご注文内容
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  ・デザイン 
+  <br>
+  <% @order.items_array.each do |array| %>
+    <%= t("order.size.#{array[:size]}") + t("order.item.#{array[:item]}")%> <%= array[:quantity] %>個
+    <br>
+  <% end %>
+  <% unless @order.wrappings_array.sum {|hash| hash[:price]} == 0 %>
+    <br>
+    ・包装 
+    <br>
+    <% @order.wrappings_array.each do |array| %>
+      <% next if array[:wrapping] == "nowrap" %>
+      <%= t("order.wrapping.#{array[:wrapping]}") %> <%= array[:quantity] %>セット
+      <br>
+    <% end %>
+  <% end %>
+
+  <br>
+  製作プラン： <%= t "order.manufacture_plan.#{@order.manufacture_plan}" %>
+  <br>
+  お支払い方法 <%= t "order.payment_type.#{@order.payment_type}" %>
+  <br>
+  <br>
+  ■製作内容詳細
+  <br>
+  …………………………………………………………………………………………
+  <br>
+  <% @order.products.each_with_index do |product, index| %>
+    製作ユニット <%= format("%02d", index + 1) %>:
+    <br>
+    &nbsp;&nbsp;&nbsp; <%= t("order.size.#{product.size}") + t("order.item.#{product.item}") %> ×<%= product.quantity %>個
+    <br>
+    &nbsp;&nbsp;&nbsp; デザインデータ： <%= product.file_name %>
+    <br>
+    &nbsp;&nbsp;&nbsp; 包装オプション： <%= t("order.wrapping.#{product.wrapping}") %>
+  <br>
+  <% end %>
+  <br>
+</p>
+<br>
+☆このメールは自動送信のため、ご返信頂きましてもご連絡できませんのでご注意ください。
+<br>
+<%= render 'send_mailer/shared/signature' %>

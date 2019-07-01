@@ -1,0 +1,24 @@
+h2 お問い合わせ内容のご確認
+
+table
+  tr
+    th
+    td = @inquiry.name
+  tr
+    th
+    td = @inquiry.email
+  tr
+    th
+    td = simple_format(@inquiry.content)
+
+= simple_form_for(@inquiry, url: index_inquiry_index_url(@inquiry)) do |f|
+  = f.hidden_field :name
+  = f.hidden_field :email
+  = f.hidden_field :content
+  = f.submit "戻る"
+
+= simple_form_for(@inquiry, url: completed_inquiry_index_url(@inquiry)) do |f|
+  = f.hidden_field :name
+  = f.hidden_field :email
+  = f.hidden_field :content
+  = f.submit

@@ -1,0 +1,22 @@
+.container.mt-5
+  .border.p-3
+    p = @order.customer_type
+    p = @order.customer_name
+    p = @order.customer_email
+  .border.border-info.p-3
+    -@order.products.each do |product|
+      p = product.item
+      p = product.design
+      p ☆
+
+
+  p お客様に関しての情報を教えてください。
+
+  = simple_form_for(@order, url: is_customer_type_order_url(@order)) do |f|
+    = f.hidden_field :customer_is_company, value: false
+    = render 'orders/hidden/customer_type', f: f
+    = f.submit "個人"
+  = simple_form_for(@order, url: is_customer_type_order_url(@order)) do |f|
+    = f.hidden_field :customer_is_company, value: true
+    = render 'orders/hidden/customer_type', f: f
+    = f.submit "法人"

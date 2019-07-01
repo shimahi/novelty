@@ -1,0 +1,210 @@
+// SASS variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+@import "active_admin/base";
+$skinActiveColor: #00c99e;
+$skinHeaderBck: #002744;
+$panelHeaderBck: #002744;
+
+@import "active_skin";
+// Overriding any non-variable SASS must be done after the fact.
+// For example, to change the default status-tag color:
+//
+//   .status_tag { background: #6090DB; }
+
+/*
+background-color: #fff;
+background: #fff url(/assets/active_skin/default_logo-d59b614….png) no-repeat 30px 0;
+*/
+.float-right {
+  float: right;
+}
+
+.row.bold td, .textbold {
+  font-weight: bold;
+}
+.admin_back_link {
+  font-size: 1rem;
+}
+
+#header h1.site_title {
+  background: none;
+  display: none;
+}
+#footer {
+  p {
+   display: none;
+ }
+}
+
+/*status-label*/
+@mixin status-tag($color) {
+  color: #fff;
+  display: inline-block;
+  padding: 2px 5px;
+  background-color: $color;
+}
+.status {
+  &_newly {
+    @include status-tag(#09c);
+  }
+  &_answering {
+    @include status-tag(#f90);
+  }
+  &_constructing {
+    @include status-tag(#e99);
+  }
+  &_done {
+    @include status-tag(#0c9);
+  }
+  &_canceled {
+    @include status-tag(#ccf);
+    color: #777
+  }
+}
+
+/* column */
+.narrow {
+  width: 30px;
+}
+.plan_tag {
+  .express_plan_tag {
+    border: solid 2px #c97;
+    padding: 3px;
+  }
+  .normal_plan_tag {
+    border: solid 2px #79c;
+    padding: 3px;
+  }
+}
+
+
+/* show */
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.show-head-wrapper {
+  display: flex;
+  margin-top: 10px;
+  .mailer-block {
+    flex: 3;
+  }
+  .info-block {
+    flex: 7;
+    margin-left: 30px;
+  }
+}
+.design-cell {
+  img {
+    max-width: 80px;
+  }
+  span {
+    display: block;
+    max-width: 225px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.canceled-product-row {
+  background: #edd;
+}
+.slips {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+.mail-block {
+  padding: 10px;
+  border-bottom: solid 1px #bcb;
+  &.receivedmail-block {
+    background: #fff9f9;
+  }
+  &.sentmail-block {
+    background: #f3f6ff;
+  }
+  .timestamp {
+    display: flex;
+    justify-content: flex-end
+  }
+}
+
+/* edit */
+#order_status_input {
+  background: #f5f5f8;
+}
+
+/* - - フォーム外見 - - - - - - */
+.simple_form .panel_contents {
+  font-size: 14px;
+
+  div.form-group.optional {
+    display: flex;
+    label {
+      flex: 1;
+      margin: 10px 0;
+    }
+    input, select {
+      flex: 4;
+      margin: 10px 5px;
+    }
+  }
+  .form-check {
+    padding-left: 20%;
+  }
+  .nested_order_products {
+    height: 75px;
+    vertical-align: middle;
+    .filename {
+      font-size: 12px;
+      color: #446;
+      position: relative;
+      top: -4px;
+    }
+  }
+  .btn {
+    background: #9ab;
+    padding: 5px 8px;
+    text-decoration: none;
+    color: #fff;
+    display: inline-block;
+    border-radius: 32x;
+    &.delete-button {
+      margin: 10px 0;
+      background: #b99;
+    }
+  }
+}
+
+
+/* 年月入力のfix */
+fieldset.fragments legend.label {
+  width: 150px;
+  border-bottom: none;
+  label {
+    width: 100%;
+  }
+}
+form fieldset > ol > li fieldset:not(.inputs) ol {
+  display: flex;
+  li:first-child:after {
+    content: "年"
+  }
+  li:nth-child(2):after {
+    content: "月"
+  }
+  li:nth-child(3):after {
+    content: "日"
+  }
+}

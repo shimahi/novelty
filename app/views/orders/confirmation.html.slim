@@ -1,0 +1,25 @@
+.container
+  h2 ご注文内容の確認
+
+
+  .border.p-3
+    p = @order.customer_type
+    p = @order.customer_name
+    p = @order.customer_email
+  .border.border-info.p-3
+    -@order.products.each do |product|
+      p = product.item
+      - if  product.image_file?
+        p = product.design_url
+        = image_tag product.design_url, style: "max-width: 100px"
+      - else
+        p = product.file_name
+      p --------
+
+  = simple_form_for(@order, url: re_option_order_url(@order)) do |f|
+    = render 'orders/hidden/confirmation', f: f
+    = f.submit "戻る", class: 'btn btn-default'
+
+  = simple_form_for(@order, url: order_url(@order)) do |f|
+    = render 'orders/hidden/confirmation', f: f
+    = f.submit "注文を確定する", class: "btn btn-primary"

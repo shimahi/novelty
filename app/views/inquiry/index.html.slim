@@ -1,0 +1,7 @@
+h2 お問い合わせ
+
+= simple_form_for(@inquiry, url: confirmation_inquiry_index_url(@inquiry)) do |f|
+  = f.input :name
+  = f.input :email
+  = f.input :content
+  = f.submit

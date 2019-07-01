@@ -1,0 +1,11 @@
+= f.hidden_field :customer_is_company
+= f.hidden_field :option
+= f.hidden_field :manufacture_plan
+= f.hidden_field :payment_type
+= f.nested_fields_for :products do |p|
+  = p.hidden_field :design
+  = p.hidden_field :design_cache
+  = p.hidden_field :item
+  = p.hidden_field :size
+  = p.hidden_field :quantity
+  = p.hidden_field :wrapping

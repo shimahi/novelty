@@ -1,0 +1,24 @@
+-unless @order.status == :canceled
+  .panel
+    h3 伝票類発行
+    - unless @order.canceled?
+      .slips
+        = link_to "見積書発行", "/admin/#{@order.status.pluralize}/#{@order.id}/estimate", target: "_blank" if (@order.newly? || @order.answering?)
+        = link_to "納品書発行", "/admin/#{@order.status.pluralize}/#{@order.id}/delivery", target: "_blank" unless @order.newly?
+        = link_to "請求書発行", "/admin/#{@order.status.pluralize}/#{@order.id}/invoice", target: "_blank" unless @order.newly?
+        = link_to "領収書発行", "/admin/#{@order.status.pluralize}/#{@order.id}/receipt", target: "_blank" unless @order.newly?
+
+.panel
+  h3
+    | メール
+    - if @order.data_checked?
+      = link_to "メールを作成する", "/admin/#{@order.status.pluralize}/#{@order.id}/new_mail", class: "float-right"
+    - else
+      span style="float: right" ※データチェック未完了
+  .panel_contents
+    - @mails.each do |mail|
+      .mail-block class="mail-block #{mail.class.to_s.downcase}-block"
+        h6.mail-block-subject = mail.subject
+        p.mail-block-text == mail.text
+        small.timestamp = mail.created_at
+    = link_to "受信メールを関連づける", "/admin/#{@order.status.pluralize}/#{@order.id}/register_received_mail"

@@ -1,0 +1,24 @@
+.text-right
+  = link_to "キャンセル済み一覧に戻る", admin_canceleds_path, class: "admin_back_link"
+
+.show-head-wrapper
+  .mailer-block
+    .panel
+      h3
+        | メール
+      .panel_contents
+        - @mails.each do |mail|
+          h6.mail-block-subject = mail.subject
+          p.mail-block-text == mail.text
+          small = mail.created_at
+          hr
+  .info-block
+    = render 'admin/shared/order_table'
+    = render 'admin/shared/customer_table'
+= render 'admin/shared/shipping_table'
+
+.show-design-wrapper.newly
+  = render 'admin/shared/product_table'
+
+.show-fee-wrapper.newly
+  = render 'admin/shared/fee_table'

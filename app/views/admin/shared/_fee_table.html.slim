@@ -1,0 +1,43 @@
+.panel
+  h3 料金
+
+
+  .panel_contents
+    .attributes_table.order
+      table border="0" cellspacing="0" cellpadding="0"
+        thead
+          tr
+            td 品名
+            td 数量
+            td 単価
+            td 金額
+
+        tbody
+          - @order.items_array.each do |array|
+            tr
+              td = t("order.size.#{array[:size]}") +  t("order.item.#{array[:item]}")
+              td = array[:quantity]
+              td = array[:price]
+              td = array[:quantity] * array[:price]
+          - @order.wrappings_array.each do |array|
+            - if array[:wrapping] == "nowrap"
+              - next
+            tr
+              td =  t("order.wrapping.#{array[:wrapping]}")
+              td = array[:quantity]
+              td = array[:price]
+              td = array[:quantity] * array[:price]
+
+      table border="0" cellspacing="0" cellpadding="0"
+        tr
+          th 商品・オプション合計
+          td = @order.order_price
+        tr
+          th 送料
+          td = @order.order_carriage
+        tr
+          th 消費税
+          td = @order.order_tax
+        tr
+          th 合計
+          td = @order.total_price

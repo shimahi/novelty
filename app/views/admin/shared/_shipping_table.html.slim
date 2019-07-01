@@ -1,0 +1,28 @@
+.panel
+  h3.text-danger 配送先情報
+  .panel_contents
+    -if @order.another_shipping
+      .attributes_table.order
+        table border="0" cellspacing="0" cellpaddding="0"
+          tbody
+            tr.row.bold
+              th = t 'activerecord.attributes.order.shipping_name'
+              td = @order.shipping_name
+            - if @order.shipping_is_company == "true"
+              tr.row.bold
+                th = t 'activerecord.attributes.order.shipping_division_name'
+                td = @order.shipping_division_name
+              tr.row.bold
+                th = t 'activerecord.attributes.order.shipping_staff_name'
+                td = @order.shipping_staff_name
+            tr.row.bold
+              th 郵便番号
+              td = @order.shipping_zip
+            tr.row.bold
+              th 住所
+              td = @order.shipping_addr
+            tr.row.bold
+              th 電話番号
+              td = @order.shipping_tel
+    -else
+      b 配送先は発注主と同一です。

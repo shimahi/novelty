@@ -1,0 +1,4 @@
+= simple_form_for(@mail, url: create_mail_admin_constructing_url(@order)) do |f|
+  = f.input :subject, input_html: { value: "発送のお知らせ[ご注文番号: #{@order.id}]"}
+  = f.input :text, input_html: { rows: 20, value: render('send_mailer/shared/shipping_completed_text') }
+  = f.submit "メールを送信する", class: "btn btn-primary"

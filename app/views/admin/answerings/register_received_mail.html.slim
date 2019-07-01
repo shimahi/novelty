@@ -1,0 +1,4 @@
+= simple_form_for(@mail, url: save_received_mail_admin_answering_url(@order)) do |f|
+  = f.input :subject
+  = f.input :text, input_html: { rows: 20 }
+  = f.submit "受信メールを登録する", class: "btn btn-primary"

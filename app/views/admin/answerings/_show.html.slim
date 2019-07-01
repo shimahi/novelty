@@ -1,0 +1,16 @@
+.text-right
+  = link_to "確約待ちに戻る", admin_answerings_path, class: "admin_back_link"
+
+.show-head-wrapper
+  .mailer-block
+    = render 'admin/shared/mail_log'
+  .info-block
+    = render 'admin/shared/order_table'
+    = render 'admin/shared/customer_table'
+= render 'admin/shared/shipping_table'
+
+.show-design-wrapper.newly
+  = render 'admin/shared/product_table'
+
+.show-fee-wrapper.newly
+  = render 'admin/shared/fee_table'

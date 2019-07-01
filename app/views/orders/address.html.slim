@@ -1,0 +1,59 @@
+.container.mt-5
+
+
+  .border.p-3
+    p = @order.customer_type
+    p = @order.customer_name
+    p = @order.customer_email
+  .border.border-info.p-3
+    -@order.products.each do |product|
+      p = product.item
+      p = product.design
+      p --------
+
+
+  /戻る用のフォーム
+  = simple_form_for(@order, url: re_customer_type_order_url(@order)) do |f|
+    = render 'orders/hidden/default', f: f
+    = f.submit "戻る",class: "btn btn-default"
+
+  /進む用のフォーム
+  = simple_form_for(@order, url: is_address_order_url(@order)) do |f|
+    = render 'orders/hidden/address', f: f
+    .row
+      .col-6
+        .form-group
+          label.form-control-label.string.optional for="order_customer_name"
+            = @order.customer_is_company ? "法人名" : "お名前"
+          = f.input :customer_name, label: false
+        - if @order.customer_is_company
+          = f.input :customer_staff_name
+          = f.input :customer_division_name
+        = f.input :customer_email
+        = f.input :customer_tel
+        = f.input :customer_zip, input_html: { onKeyUp: "AjaxZip3.zip2addr(this,'','order[customer_addr1]','order[customer_addr2]', 'order[customer_addr3]', '', false);" }
+        = f.collection_select :customer_addr1, Prefecture.all, :name, :name
+        = f.input :customer_addr2
+        = f.input :customer_addr3
+        = f.input :customer_addr4
+        = f.input :customer_addr5
+
+      .col-6
+        = f.input :another_shipping, as: :radio_buttons,
+          collection: [['請求先の住所に発送する', false],['別の配送先を選択する', true]]
+        .shipping-form-wrapper
+          = f.input :shipping_is_company, as: :select, include_blank: false, collection: [ ['個人', false],['法人', true]]
+          = f.input :shipping_name
+          = f.input :shipping_staff_name, disabled: true
+          = f.input :shipping_division_name, disabled: true
+          = f.input :shipping_tel
+          = f.input :shipping_zip, input_html: { onKeyUp: "AjaxZip3.zip2addr(this,'','order[shipping_addr1]','order[shipping_addr2]', 'order[shipping_addr3]', '', false);" }
+          = f.collection_select :shipping_addr1, Prefecture.all, :name, :name
+          = f.input :shipping_addr2
+          = f.input :shipping_addr3
+          = f.input :shipping_addr4
+          = f.input :shipping_addr5
+
+
+    .noturbolinks data-turbolinks="false"
+        = f.submit "確定して次へ",class: "btn btn-primary"
